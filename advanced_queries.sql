@@ -1,11 +1,8 @@
--- =====================================================
--- ADVANCED SQL PRACTICE
--- Subqueries, CASE, VIEW, and INDEX
--- =====================================================
+--Advanced SQL Practice: Subqueries, CASE, VIEW, and INDEX
 
--- TASK 1:
--- Uses a subquery to return shows with more episodes watched
--- than the average number of episodes watched in the table.
+--TASK 1:
+--Uses a subquery to return shows with more episodes watched (& avg. # of episodes watched)
+
 SELECT show_name, genre, episodes_watched
 FROM tv_shows
 WHERE episodes_watched > (
@@ -13,9 +10,9 @@ WHERE episodes_watched > (
     FROM tv_shows
 );
 
+--TASK 2:
+--Uses CASE to create a new classification column based on rating
 
--- TASK 2:
--- Uses CASE to create a new classification column based on rating.
 SELECT
     show_name,
     rating,
@@ -28,9 +25,9 @@ SELECT
 FROM tv_shows;
 
 
--- TASK 3:
--- Creates a view that summarizes shows by genre.
--- DROP VIEW allows the file to be rerun without errors.
+--TASK 3:
+--Creates a view that summarizes shows by genre (DROP VIEW allows the file to be rerun without errors)
+
 DROP VIEW IF EXISTS genre_summary;
 
 CREATE VIEW genre_summary AS
@@ -42,12 +39,13 @@ SELECT
 FROM tv_shows
 GROUP BY genre;
 
--- Selects all data from the saved view.
+--Selects all data from the saved view
 SELECT * FROM genre_summary;
 
 
--- TASK 4:
--- Creates an index on genre because genre is often used in WHERE and GROUP BY filters.
--- An index helps speed up searches on large tables, but it does not matter much on tiny tables.
+--TASK 4:
+--Creates an index on genre because genre is often used in WHERE and GROUP BY filters
+--An index helps speed up searches in large tables, not super helpful in smaller table
+
 CREATE INDEX IF NOT EXISTS idx_tv_shows_genre
 ON tv_shows(genre);
